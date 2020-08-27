@@ -1,0 +1,8 @@
+{
+    "Lua.diagnostics.globals": [
+        "gGame",
+        "CS",
+        "typeof",
+        "gResourceManager"
+    ]
+}
