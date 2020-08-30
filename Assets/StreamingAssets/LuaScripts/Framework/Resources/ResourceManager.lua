@@ -8,9 +8,6 @@ function ResourceManager:__delete()
 
 end
 
-function ResourceManager:Init()
-    print("Resource Manager inited");
-end
 
 function ResourceManager:LoadAsset(resType, assetPath)
     return CS.UnityEngine.Resources.Load(assetPath);
