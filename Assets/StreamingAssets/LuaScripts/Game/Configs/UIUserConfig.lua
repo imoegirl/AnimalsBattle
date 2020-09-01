@@ -1,14 +1,11 @@
 
-UIEnum = {
-    ['UIMainPanel'] = 'UIMainPanel',
-    ['UIPlayPanel'] = 'UIPlayPanel'
-}
-
+UIEnum['UIMainPanel'] = 'UIMainPanel';
+UIEnum['UIPlayPanel'] = 'UIPlayPanel';
 
 UIConfig:AddUIConfig(
     UIMainPanelClass,
     UIEnum.UIMainPanel,
     'UI/UIMainPanel',
     LanguageEnum.ZH,
-    UILayerEnum.Panel,
+    UILayerEnum.Panel
 )

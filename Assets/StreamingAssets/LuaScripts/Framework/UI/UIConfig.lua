@@ -1,5 +1,7 @@
 UIConfig = {}
 
+UIEnum = {}
+
 UILayerEnum = {
     ["Panel"] = 1,
     ["Popup"] = 2,

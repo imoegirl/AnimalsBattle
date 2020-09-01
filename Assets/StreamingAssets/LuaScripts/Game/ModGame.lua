@@ -1,2 +1,2 @@
-require 'Game.UIUserConfig'
+require 'Game.Configs.UIUserConfig'
 require 'Game.Game'

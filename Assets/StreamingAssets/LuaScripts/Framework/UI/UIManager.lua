@@ -9,9 +9,17 @@ function UIManager:__init()
 
     -- {[panelEnum] = {panel1, panel2, panel3}, [panelEnum] = {}...}
     self.openedUIWithEnumDict = {}
+
+    self:CreateUIRoot();
 end
 
 function UIManager:__delete()
+
+end
+
+-- 每个 UI 面板，都是一个独立的 Canvas
+function UIManager:CreateUIRoot()
+    self.uiRootObj = CS.UnityEngine.GameObject("UIRoot");
 
 end
 
