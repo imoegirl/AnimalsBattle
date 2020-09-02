@@ -3,10 +3,10 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using XLua;
+using UnityEngine.UI;
 
 public static class LuaGenConfig
 {
-
     [LuaCallCSharp]
     public static List<Type> LuaCallCSharpTypeList = new List<Type>()
     {
@@ -127,6 +127,11 @@ public static class LuaGenConfig
 
     };
 
+    public static Dictionary<UComponent, Type> uComponentDict = new Dictionary<UComponent, Type>(){
+        {UComponent.Image, typeof(Image)},
+        
+    }
+
 
     //黑名单
     [BlackList]
@@ -163,4 +168,10 @@ public static class LuaGenConfig
                 new List<string>(){ "System.Type", "IsSZArray"},
                 new List<string>(){ "UnityEngine.Input", "IsJoystickPreconfigured", "System.String" },
             };
+}
+
+
+[LuaCallCSharp]
+public enum UComponent {
+    Image,
 }

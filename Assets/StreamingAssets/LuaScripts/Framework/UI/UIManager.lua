@@ -10,6 +10,8 @@ function UIManager:__init()
     -- {[panelEnum] = {panel1, panel2, panel3}, [panelEnum] = {}...}
     self.openedUIWithEnumDict = {}
 
+    self.layerParentDict = {}
+
     self:CreateUIRoot();
 end
 
@@ -20,7 +22,11 @@ end
 -- 每个 UI 面板，都是一个独立的 Canvas
 function UIManager:CreateUIRoot()
     self.uiRootObj = CS.UnityEngine.GameObject("UIRoot");
-
+    for k, v in pairs(UILayerEnum) do
+        local layerName = k;
+        local layerObj = CS.UnityEngine.GameObject(layerName);
+        layerObj.transform:SetParent(self.uiRootObj.transform);
+    end
 end
 
 
@@ -34,6 +40,12 @@ function UIManager:OpenUI(uiEnum, data)
             local uiConfig = UIConfig[self.languageEnum][uiEnum];
             local assetPath = uiConfig.uiAssetPath;
             local panelGameObject = self:LoadUIAssetPath(assetPath);
+            local uiLayerEnum = UIConfig[self.languageEnum][uiEnum].layerEnum;
+            local uiParent = self.layerParentDict[uiLayerEnum];
+            panelGameObject.transform:SetParent(uiParent);
+            local canvas = panelGameObject:GetComponent()
+
+
             local uiObj = panelConfig.uiProtoType.New();
             local id = self.UIIDIndex;
             self.UIIDIndex = self.UIIDIndex + 1;

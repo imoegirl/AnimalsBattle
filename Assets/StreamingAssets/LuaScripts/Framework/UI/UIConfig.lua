@@ -5,7 +5,13 @@ UIEnum = {}
 UILayerEnum = {
     ["Panel"] = 1,
     ["Popup"] = 2,
-    ["System"] = 3,
+    ["System"] = 3
+}
+
+UILayerCanvasOrderStart = {
+    ['Panel'] = 10000,
+    ['Popup'] = 40000,
+    ['System'] = 50000
 }
 
 LanguageEnum = {
