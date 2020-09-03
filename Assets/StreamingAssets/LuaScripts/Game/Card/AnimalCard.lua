@@ -28,7 +28,7 @@ function AnimalCard:TryKill(card)
         if self.cardType == CardType.Mouse and card.cardType == CardType.Elephant then
             return KillResult.TargetKilled;
         elseif self.cardType > card.cardType then
-            return KillResult.TargetKilled；
+            return KillResult.TargetKilled;
         elseif self.cardType == card.cardType then
             return KillResult.PerishTogether;
         else
