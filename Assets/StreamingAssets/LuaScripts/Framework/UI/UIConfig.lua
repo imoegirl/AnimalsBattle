@@ -3,9 +3,9 @@ UIConfig = {}
 UIEnum = {}
 
 UILayerEnum = {
-    ["Panel"] = 1,
-    ["Popup"] = 2,
-    ["System"] = 3
+    ["Panel"] = "Panel",
+    ["Popup"] = "Popup",
+    ["System"] = "System"
 }
 
 UILayerCanvasOrderStart = {

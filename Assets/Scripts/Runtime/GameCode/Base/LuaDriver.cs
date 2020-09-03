@@ -122,6 +122,11 @@ public class LuaDriver : TaleSingleton<LuaDriver>
         globalLuaEnv.Global.Get(name, out func);
     }
 
+    public void DynamicReloadDebugLuaFile() {
+        byte[] luaMainCode = LoadLuaScript("Debug");
+        DoStringWithException(luaMainCode, "Debug", globalLuaEnv.Global);
+    }
+
     public void InitGame()
     {
         LuaFuncInitGame();

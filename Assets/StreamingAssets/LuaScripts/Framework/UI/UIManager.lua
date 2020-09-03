@@ -43,8 +43,9 @@ function UIManager:OpenUI(uiEnum, data)
             local uiLayerEnum = UIConfig[self.languageEnum][uiEnum].layerEnum;
             local uiParent = self.layerParentDict[uiLayerEnum];
             panelGameObject.transform:SetParent(uiParent);
-            local canvas = panelGameObject:GetComponent()
-
+            local canvas = panelGameObject:GetComponent();
+            canvas.sortingOrder = UILayerCanvasOrderStart[uiLayerEnum];
+            UILayerCanvasOrderStart[uiLayerEnum] = canvas.sortingOrder + 1;
 
             local uiObj = panelConfig.uiProtoType.New();
             local id = self.UIIDIndex;

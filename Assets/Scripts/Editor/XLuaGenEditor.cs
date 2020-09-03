@@ -17,4 +17,9 @@ public class XLuaGenEditor
         CSObjectWrapEditor.Generator.GenAll();
     }
 
+    [MenuItem("XLua/Reload Debug File")]
+    public static void ReloadDebugFile() {
+        LuaDriver.Inst.DynamicReloadDebugLuaFile();
+    }
+
 }
