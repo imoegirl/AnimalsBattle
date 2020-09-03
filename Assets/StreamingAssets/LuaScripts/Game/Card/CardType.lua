@@ -6,5 +6,5 @@ CardType = {
     ['Wolf'] = 4,
     ['Dog'] = 3,
     ['Cat'] = 2,
-    ['Mouse'] 1,
+    ['Mouse'] = 1,
 }
