@@ -8,11 +8,14 @@ function AnimalCard:__delete()
 
 end
 
-function AnimalCard:Init(cardType)
+function AnimalCard:Init(cardType, y, x, colorType)
     self.cardType = cardType;
+    self.y = y;
+    self.x = x;
+    self.colorType = colorType;
 end
 
-function AnimalCard:SetPos(x, y)
+function AnimalCard:SetPos(y, x)
     self.x = x;
     self.y = y;
 end
