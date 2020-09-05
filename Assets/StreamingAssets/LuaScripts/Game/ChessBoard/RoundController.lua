@@ -2,7 +2,9 @@ RoundController = Class("RoundController")
 
 function RoundController:__init()
     self.currRoundColor = ColorType.Red;
+    self.cardList = nil;
     self.board = ChessBoard.New();
+    self.boardRenderer = ChessBoardRenderer.New();
 end
 
 function RoundController:__delete()
@@ -16,7 +18,9 @@ function RoundController:Init()
         self.currRoundColor = ColorType.Blue;
     end
 
-    local cardList = self:GenerateCardList()
+    self.cardList = self:GenerateCardList();
+    self.board:Init(self.cardList);
+    self.boardRenderer:Init(self.board);
 end
 
 function RoundController:GenerateCardList()
@@ -39,9 +43,23 @@ function RoundController:GenerateCardList()
     table.insert(cardList, self:CreateNewCard(CardType.Cat, 3, 2, ColorType.Blue));
     table.insert(cardList, self:CreateNewCard(CardType.Mouse, 3, 3, ColorType.Blue));
 
-    table.sert(cardList, function(a,b)
-        -- 公平排序
-    end);
+    math.randomseed(os.time())
+    local count = #cardList;
+    for i = count, 2, -1 do
+        local randIndex = math.random(1, i - 1);
+        local tmp = cardList[i];
+        cardList[i] = cardList[randIndex];
+        cardList[randIndex] = tmp;
+    end
+
+    local index = 1;
+    for y = 0, 3 do
+        for x = 0, 3 do
+            local card = cardList[index];
+            index = index + 1;
+            card:SetPos(y, x);
+        end
+    end
 
     return cardList;
 end

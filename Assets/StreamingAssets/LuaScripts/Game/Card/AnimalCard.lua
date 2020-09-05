@@ -8,10 +8,8 @@ function AnimalCard:__delete()
 
 end
 
-function AnimalCard:Init(cardType, y, x, colorType)
+function AnimalCard:Init(cardType, colorType)
     self.cardType = cardType;
-    self.y = y;
-    self.x = x;
     self.colorType = colorType;
 end
 

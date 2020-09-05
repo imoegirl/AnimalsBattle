@@ -17,9 +17,7 @@ end
 
 function ChessBoard:InitData(cardList)
     for k, v in pairs(cardList) do
-        local x = v.x;
-        local y = v.y;
-        self.cards[y][x] = v;
+        self.cards[v.y][v.x] = v;
     end
 end
 
