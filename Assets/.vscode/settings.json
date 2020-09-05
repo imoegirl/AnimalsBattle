@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.globals": [
+        "CS",
+        "self",
+        "typeof"
+    ]
+}
