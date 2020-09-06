@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Xlua;
+using XLua;
 
 [LuaCallCSharp]
 public static partial class LuaInterface {

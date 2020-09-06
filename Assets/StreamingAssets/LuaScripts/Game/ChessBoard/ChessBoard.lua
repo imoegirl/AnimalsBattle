@@ -16,6 +16,7 @@ function ChessBoard:__init()
 end
 
 function ChessBoard:InitData(cardList)
+    self.cards = {};
     for k, v in pairs(cardList) do
         self.cards[v.y][v.x] = v;
     end
@@ -23,6 +24,10 @@ end
 
 function ChessBoard:GetCard(y,x)
     return self.cards[y][x];
+end
+
+function ChessBoard:RemoveCard(y, x)
+    self.cards[y][x] = nil;
 end
 
 function ChessBoard:OperateCard(card, y, x)

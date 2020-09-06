@@ -8,3 +8,13 @@ CardType = {
     ['Cat'] = 2,
     ['Mouse'] = 1,
 }
+
+ColorType = {
+    ['Blue'] = 'Blue',
+    ['Red'] = 'Red',
+}
+
+CardStatus = {
+    ['Dark'] = 0,
+    ['Light'] = 1,
+}

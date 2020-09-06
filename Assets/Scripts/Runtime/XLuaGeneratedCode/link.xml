@@ -2,6 +2,13 @@
 
 <linker>
 
+	<assembly fullname="Assembly-CSharp">
+	    <type fullname="Coroutine_Runner" preserve="all"/>
+		<type fullname="UComponent" preserve="all"/>
+		<type fullname="LuaInterface" preserve="all"/>
+		
+	</assembly>
+
 	<assembly fullname="mscorlib">
 	    <type fullname="System.Object" preserve="all"/>
 		<type fullname="System.Reflection.BindingFlags" preserve="all"/>
@@ -83,6 +90,14 @@
 
 	<assembly fullname="UnityEngine.InputLegacyModule">
 	    <type fullname="UnityEngine.Input" preserve="all"/>
+		
+	</assembly>
+
+	<assembly fullname="UnityEngine.PhysicsModule">
+	    <type fullname="UnityEngine.Physics" preserve="all"/>
+		<type fullname="UnityEngine.RaycastHit" preserve="all"/>
+		<type fullname="UnityEngine.Collider" preserve="all"/>
+		<type fullname="UnityEngine.BoxCollider" preserve="all"/>
 		
 	</assembly>
 

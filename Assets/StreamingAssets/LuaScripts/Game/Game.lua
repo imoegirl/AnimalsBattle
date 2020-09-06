@@ -8,7 +8,7 @@ function Game:__init()
     gUIManager:SetLanguageEnum(LanguageEnum.ZH)
     
     -- 打开主界面
-    gUIManager:OpenUI(UIEnum.UIMainPanel);
+    -- gUIManager:OpenUI(UIEnum.UIMainPanel);
 end
 
 function Game:__delete()
@@ -17,6 +17,10 @@ end
 
 function Game:Update()
     gUIManager:Update();
+    
+    if CS.UnityEngine.Input.GetMouseButtonDown(0) then
+        -- Physics.Raycast ...
+    end
 end
 
 function Game:LateUpdate()

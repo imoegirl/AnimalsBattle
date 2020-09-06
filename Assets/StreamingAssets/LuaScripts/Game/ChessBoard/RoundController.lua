@@ -2,9 +2,12 @@ RoundController = Class("RoundController")
 
 function RoundController:__init()
     self.currRoundColor = ColorType.Red;
+    self.myRoundColor = ColorType.red;
     self.cardList = nil;
     self.board = ChessBoard.New();
     self.boardRenderer = ChessBoardRenderer.New();
+
+    self.pickCard = nil;    -- 当前处于操作状态的卡牌
 end
 
 function RoundController:__delete()
@@ -24,24 +27,39 @@ function RoundController:Init()
 end
 
 function RoundController:GenerateCardList()
+    local uidIndex = 10000;
     local cardList = {}
-    table.insert(cardList, self:CreateNewCard(CardType.Elephant, 0, 0, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Lion, 0, 1, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Tiger, 0, 2, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Leopard, 0, 3, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Wolf, 1, 0, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Dog, 1, 1, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Cat, 1, 2, ColorType.Red));
-    table.insert(cardList, self:CreateNewCard(CardType.Mouse, 1, 3, ColorType.Red));
-
-    table.insert(cardList, self:CreateNewCard(CardType.Elephant, 2, 0, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Lion, 2, 1, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Tiger, 2, 2, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Leopard, 2, 3, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Wolf, 3, 0, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Dog, 3, 1, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Cat, 3, 2, ColorType.Blue));
-    table.insert(cardList, self:CreateNewCard(CardType.Mouse, 3, 3, ColorType.Blue));
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Elephant, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Lion, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Tiger, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Leopard, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Wolf, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Dog, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Cat, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Mouse, ColorType.Red));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Elephant, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Lion, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Tiger, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Leopard, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Wolf, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Dog, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Cat, ColorType.Blue));
+    uidIndex = uidIndex + 1;
+    table.insert(cardList, self:CreateNewCard(uidIndex, CardType.Mouse, ColorType.Blue));
 
     math.randomseed(os.time())
     local count = #cardList;
@@ -64,8 +82,93 @@ function RoundController:GenerateCardList()
     return cardList;
 end
 
-function RoundController:CreateNewCard(cardType, y, x, colorType)
+function RoundController:CreateNewCard(uid, cardType, colorType)
     local card = AnimalCard.New();
-    card:Init(cardType, y, x, colorType);
+    card:Init(uid, cardType, colorType);
     return card;
+end
+
+function RoundController:OnClick()
+    if not self:RoundOperateValid() then
+        return;
+    end
+
+    local x = 0;
+    local y = 0;
+
+    if self.pickCard ~= nil then
+        local opResult = self.board:OperateCard(self.pickCard, y, x);
+        if opResult == OperateResult.CancelOperation then
+            self.pickCard = nil;
+            self.boardRenderer:OnCancelPickCard();
+        elseif opResult == OperateResult.MoveToNewPos then
+            self.pickCard:SetPos(y, x);
+            self:SwitchRound();
+            self.boardRenderer:OnMoveCard(self.pickCard);
+            self.pickCard = nil;
+        elseif opResult == OperateResult.InvalidOperation then
+            self.boardRenderer:OnInValidCardOperation(self.pickCard);
+        elseif opResult == OperateResult.TargetKilled then
+            local targetCard = self.board:GetCard(y, x);
+            self.board:RemoveCard(y, x);
+            self.boardRenderer:OnTargetKilled(self.pickCard, targetCard);
+            self.pickCard = nil;
+        elseif opResult == OperateResult.PerishTogether then
+            local targetCard = self.board:GetCard(y, x);
+            self.board:RemoveCard(y, x);
+            self.board:RemoveCard(self.pickCard.y, self.pickCard.x);
+            self.pickCard = nil;
+            self.boardRenderer:OnOperishTogether(self.pickCard, targetCard);
+        elseif opResult == OperateResult.KillFaild then
+            self.boardRenderer:OnKillFaild(self.pickCard);
+        end
+    else
+        local card = self.board:GetCard(y, x);
+        if self:PickCard(card) then
+            self.pickCard = card;
+            self.boardRenderer:OnPickCard(self.pickCard);
+        elseif self:LightingCard(card) then
+            self:SwitchRound();
+            self.boardRenderer:OnLightingCard(card);
+        end
+    end
+end
+
+function RoundController:PickCard(card)
+    if self.pickCard == nil 
+    and card ~= nil
+    and card.cardStatus == CardStatus.Light 
+    and card.colorType == self.currRoundColor 
+    then return true;
+    else return false;
+    end
+end
+
+function RoundController:CancelPickCard(card)
+    if self.pickCard ~= nil and self.pickCard == card then
+        return true;
+    else
+        return false;
+    end
+end
+
+function RoundController:LightingCard(card)
+    if card ~= nil
+    and self.card.cardStatus == CardStatus.Dark
+    then return true;
+    else return false;
+    end
+end
+
+
+function RoundController:SwitchRound()
+    if self.currRoundColor == ColorType.Red then
+        self.currRoundColor = ColorType.Blue;
+    else
+        self.currRoundColor = ColorType.Red;
+    end
+end
+
+function RoundController:RoundOperateValid()
+    return true;
 end

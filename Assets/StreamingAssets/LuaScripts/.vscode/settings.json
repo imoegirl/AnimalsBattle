@@ -3,6 +3,9 @@
         "gGame",
         "CS",
         "typeof",
-        "gResourceManager"
+        "gResourceManager",
+        "UIConfigTable",
+        "UIMainPanelClass",
+        "gUIManager"
     ]
 }

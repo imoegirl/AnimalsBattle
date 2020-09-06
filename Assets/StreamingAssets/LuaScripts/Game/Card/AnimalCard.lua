@@ -8,9 +8,23 @@ function AnimalCard:__delete()
 
 end
 
-function AnimalCard:Init(cardType, colorType)
+function AnimalCard:Init(uid, cardType, colorType)
+    self.uid = uid;
     self.cardType = cardType;
     self.colorType = colorType;
+    self.cardStatus = CardStatus.Dark;
+end
+
+function AnimalCard:SetStatus(cardStatus)
+    self.cardStatus = cardStatus;
+end
+
+function AnimalCard:DarkingCard()
+    self.cardStatus = CardStatus.Dark;
+end
+
+function AnimalCard:LightingCard()
+    self.cardStatus = CardStatus.Light;
 end
 
 function AnimalCard:SetPos(y, x)

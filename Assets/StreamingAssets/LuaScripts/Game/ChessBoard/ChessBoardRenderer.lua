@@ -15,26 +15,35 @@ function ChessBoardRenderer:Init(chessBoard)
    self.board = chessBoard; 
 end
 
-function ChessBoardRenderer:Show()
+
+function ChessBoardRenderer:OnPickCard(card)
 
 end
 
-function ChessBoardRenderer:SetCamera()
-    -- TODO: Load camera and save instance
+function ChessBoardRenderer:OnCancelPickCard()
+
 end
 
-function ChessBoardRenderer:SetCards()
-    -- TODO: Show all cards
+function ChessBoardRenderer:OnLightingCard(card)
+
 end
 
-function ChessBoardRenderer:OnClick()
-    -- TODO: 射线检测，看一下点到了哪个位置
-    local y = 0;  -- 点到的 y 坐标
-    local x = 0;  -- 点到的 x 坐标
-    
-    if self.pickCard ~= nil then
-        -- 执行对 self.pickCard 的操作
-    else
-        -- 看一下 y,x 位置有没有卡，如果有的话，则 Pick 这张卡
-    end
+function ChessBoardRenderer:OnMoveCard(card)
+
+end
+
+function ChessBoardRenderer:OnInvalidCardOperateion(card)
+
+end
+
+function ChessBoardRenderer:OnTargetKilled(card, targetCard)
+
+end
+
+function ChessBoardRenderer:OnPerishTogether(card, targetCard)
+
+end
+
+function ChessBoardRenderer:OnKillFaild(card)
+
 end

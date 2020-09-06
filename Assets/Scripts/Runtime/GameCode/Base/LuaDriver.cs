@@ -43,7 +43,6 @@ public class LuaDriver : TaleSingleton<LuaDriver>
         }
     }
 
-  void Update() 
 
     private void Update()
     {

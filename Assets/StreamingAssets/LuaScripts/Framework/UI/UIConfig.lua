@@ -20,11 +20,11 @@ LanguageEnum = {
 }
 
 function UIConfig:AddUIConfig(uiPrototype, uiEnum, uiAssetPath, languageEnum, layerEnum)
-    if UIConfigTable[languageEnum] == nil then
-        UIConfigTable[languageEnum] = {};
+    if UIConfig[languageEnum] == nil then
+        UIConfig[languageEnum] = {};
     end
 
-    UIConfigTable[languageEnum][uiEnum] = {
+    UIConfig[languageEnum][uiEnum] = {
         ["uiProtoType"] = uiPrototype,
         ["uiEnum"] = uiEnum,
         ["uiAssetPath"] = uiAssetPath,

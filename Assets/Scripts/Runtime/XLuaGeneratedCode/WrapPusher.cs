@@ -41,6 +41,7 @@ namespace XLua
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.UI.CanvasScaler.ScreenMatchMode>(translator.PushUnityEngineUICanvasScalerScreenMatchMode, translator.Get, translator.UpdateUnityEngineUICanvasScalerScreenMatchMode);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.UI.GridLayoutGroup.Constraint>(translator.PushUnityEngineUIGridLayoutGroupConstraint, translator.Get, translator.UpdateUnityEngineUIGridLayoutGroupConstraint);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.TouchScreenKeyboardType>(translator.PushUnityEngineTouchScreenKeyboardType, translator.Get, translator.UpdateUnityEngineTouchScreenKeyboardType);
+				translator.RegisterPushAndGetAndUpdate<UComponent>(translator.PushUComponent, translator.Get, translator.UpdateUComponent);
 			
 			}
         }
@@ -1165,6 +1166,90 @@ namespace XLua
             }
         }
         
+        int UComponent_TypeID = -1;
+		int UComponent_EnumRef = -1;
+        
+        public void PushUComponent(RealStatePtr L, UComponent val)
+        {
+            if (UComponent_TypeID == -1)
+            {
+			    bool is_first;
+                UComponent_TypeID = getTypeId(L, typeof(UComponent), out is_first);
+				
+				if (UComponent_EnumRef == -1)
+				{
+				    Utils.LoadCSTable(L, typeof(UComponent));
+				    UComponent_EnumRef = LuaAPI.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+				}
+				
+            }
+			
+			if (LuaAPI.xlua_tryget_cachedud(L, (int)val, UComponent_EnumRef) == 1)
+            {
+			    return;
+			}
+			
+            IntPtr buff = LuaAPI.xlua_pushstruct(L, 4, UComponent_TypeID);
+            if (!CopyByValue.Pack(buff, 0, (int)val))
+            {
+                throw new Exception("pack fail fail for UComponent ,value="+val);
+            }
+			
+			LuaAPI.lua_getref(L, UComponent_EnumRef);
+			LuaAPI.lua_pushvalue(L, -2);
+			LuaAPI.xlua_rawseti(L, -2, (int)val);
+			LuaAPI.lua_pop(L, 1);
+			
+        }
+		
+        public void Get(RealStatePtr L, int index, out UComponent val)
+        {
+		    LuaTypes type = LuaAPI.lua_type(L, index);
+            if (type == LuaTypes.LUA_TUSERDATA )
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != UComponent_TypeID)
+				{
+				    throw new Exception("invalid userdata for UComponent");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+				int e;
+                if (!CopyByValue.UnPack(buff, 0, out e))
+                {
+                    throw new Exception("unpack fail for UComponent");
+                }
+				val = (UComponent)e;
+                
+            }
+            else
+            {
+                val = (UComponent)objectCasters.GetCaster(typeof(UComponent))(L, index, null);
+            }
+        }
+		
+        public void UpdateUComponent(RealStatePtr L, int index, UComponent val)
+        {
+		    
+            if (LuaAPI.lua_type(L, index) == LuaTypes.LUA_TUSERDATA)
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != UComponent_TypeID)
+				{
+				    throw new Exception("invalid userdata for UComponent");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+                if (!CopyByValue.Pack(buff, 0,  (int)val))
+                {
+                    throw new Exception("pack fail for UComponent ,value="+val);
+                }
+            }
+			
+            else
+            {
+                throw new Exception("try to update a data with lua type:" + LuaAPI.lua_type(L, index));
+            }
+        }
+        
         
 		// table cast optimze
 		
@@ -1266,6 +1351,12 @@ namespace XLua
 				translator.PushUnityEngineTouchScreenKeyboardType(L, array[index]);
 				return true;
 			}
+			else if (type == typeof(UComponent[]))
+			{
+			    UComponent[] array = obj as UComponent[];
+				translator.PushUComponent(L, array[index]);
+				return true;
+			}
             return false;
 		}
 		
@@ -1359,6 +1450,12 @@ namespace XLua
 			else if (type == typeof(UnityEngine.TouchScreenKeyboardType[]))
 			{
 			    UnityEngine.TouchScreenKeyboardType[] array = obj as UnityEngine.TouchScreenKeyboardType[];
+				translator.Get(L, obj_idx, out array[array_idx]);
+				return true;
+			}
+			else if (type == typeof(UComponent[]))
+			{
+			    UComponent[] array = obj as UComponent[];
 				translator.Get(L, obj_idx, out array[array_idx]);
 				return true;
 			}

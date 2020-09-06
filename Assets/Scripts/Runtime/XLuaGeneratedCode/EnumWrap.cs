@@ -642,4 +642,56 @@ namespace XLua.CSObjectWrap
 		}
 	}
     
+    public class UComponentWrap
+    {
+		public static void __Register(RealStatePtr L)
+        {
+		    ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+		    Utils.BeginObjectRegister(typeof(UComponent), L, translator, 0, 0, 0, 0);
+			Utils.EndObjectRegister(typeof(UComponent), L, translator, null, null, null, null, null);
+			
+			Utils.BeginClassRegister(typeof(UComponent), L, null, 2, 0, 0);
+
+            
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "Image", UComponent.Image);
+            
+
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "__CastFrom", __CastFrom);
+            
+            Utils.EndClassRegister(typeof(UComponent), L, translator);
+        }
+		
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int __CastFrom(RealStatePtr L)
+		{
+			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			LuaTypes lua_type = LuaAPI.lua_type(L, 1);
+            if (lua_type == LuaTypes.LUA_TNUMBER)
+            {
+                translator.PushUComponent(L, (UComponent)LuaAPI.xlua_tointeger(L, 1));
+            }
+			
+            else if(lua_type == LuaTypes.LUA_TSTRING)
+            {
+
+			    if (LuaAPI.xlua_is_eq_str(L, 1, "Image"))
+                {
+                    translator.PushUComponent(L, UComponent.Image);
+                }
+				else
+                {
+                    return LuaAPI.luaL_error(L, "invalid string for UComponent!");
+                }
+
+            }
+			
+            else
+            {
+                return LuaAPI.luaL_error(L, "invalid lua type for UComponent! Expect number or string, got + " + lua_type);
+            }
+
+            return 1;
+		}
+	}
+    
 }

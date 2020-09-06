@@ -25,6 +25,6 @@ function OnApplicationQuit()
 end
 
 function DoSimpleTest()
-    print("SImple Test");
-    gResourceManager:LoadAndCloneGameObject("12");
+    -- print("SImple Test");
+    -- gResourceManager:LoadAndCloneGameObject("12");
 end

@@ -121,6 +121,17 @@ namespace XLua.CSObjectWrap
                     
                     return 1;
                 }
+                if(gen_param_count == 2&& translator.Assignable<UComponent>(L, 2)) 
+                {
+                    UComponent _uType;translator.Get(L, 2, out _uType);
+                    
+                        UnityEngine.Component gen_ret = gen_to_be_invoked.GetComponent( _uType );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
                 
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

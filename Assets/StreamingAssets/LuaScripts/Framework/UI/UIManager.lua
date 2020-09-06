@@ -47,7 +47,7 @@ function UIManager:OpenUI(uiEnum, data)
             canvas.sortingOrder = UILayerCanvasOrderStart[uiLayerEnum];
             UILayerCanvasOrderStart[uiLayerEnum] = canvas.sortingOrder + 1;
 
-            local uiObj = panelConfig.uiProtoType.New();
+            local uiObj = uiConfig.uiProtoType.New();
             local id = self.UIIDIndex;
             self.UIIDIndex = self.UIIDIndex + 1;
 

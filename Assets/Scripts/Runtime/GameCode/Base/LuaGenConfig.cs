@@ -40,6 +40,10 @@ public static class LuaGenConfig
         typeof(Coroutine),
         typeof(Action<string>),
         typeof(UnityEngine.Input),
+        typeof(UnityEngine.Physics),
+        typeof(UnityEngine.RaycastHit),
+        typeof(Collider),
+        typeof(BoxCollider),
 
         typeof(UnityEngine.SceneManagement.SceneManager),
 
@@ -129,8 +133,8 @@ public static class LuaGenConfig
 
     public static Dictionary<UComponent, Type> uComponentDict = new Dictionary<UComponent, Type>(){
         {UComponent.Image, typeof(Image)},
-        
-    }
+
+    };
 
 
     //黑名单
