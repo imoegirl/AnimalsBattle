@@ -8,6 +8,8 @@ function RoundController:__init()
     self.boardRenderer = ChessBoardRenderer.New();
 
     self.pickCard = nil;    -- 当前处于操作状态的卡牌
+
+    self.gameStarted = false;
 end
 
 function RoundController:__delete()
@@ -24,7 +26,26 @@ function RoundController:Init()
     self.cardList = self:GenerateCardList();
     self.board:Init(self.cardList);
     self.boardRenderer:Init(self.board);
+
+    -- 这个应该由网络消息触发
+    self:StartGame();
 end
+
+-- 这个应该由网络消息触发
+function RoundController:StartGame()
+    StartCoroutine(
+        function()
+            coroutine.yield(WaitForSeconds(3));
+            self.gameStarted = true;
+            -- 播放游戏开始
+        end
+    )
+end
+
+function RoundController:OnGameStarted()
+    self.gameStarted = true;
+end
+
 
 function RoundController:GenerateCardList()
     local uidIndex = 10000;
@@ -89,6 +110,10 @@ function RoundController:CreateNewCard(uid, cardType, colorType)
 end
 
 function RoundController:OnClick()
+    if not self.gameStarted then
+        return;
+    end
+
     if not self:RoundOperateValid() then
         return;
     end

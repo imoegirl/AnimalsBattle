@@ -13,9 +13,13 @@ function UIBase:Open(id, uiEnum, csObj, data)
     self.id = id;
     self.uiEnum = uiEnum;
     self.csObj = csObj;
-    self.data = data;
+    self.uiData = data;
     
     self:OnOpen();
+end
+
+function UIBase:Start()
+    self:OnStart();
 end
 
 -- Close 方法由 UIManager 调用
@@ -31,6 +35,10 @@ end
 ----- 下面的方法由子类覆写 ------
 
 function UIBase:OnOpen()
+
+end
+
+function UIBase:OnStart()
 
 end
 

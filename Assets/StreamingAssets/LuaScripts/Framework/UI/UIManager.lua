@@ -12,6 +12,8 @@ function UIManager:__init()
 
     self.layerParentDict = {}
 
+    self.readyOnLoadPanelDict = {}
+
     self:CreateUIRoot();
 end
 
@@ -57,6 +59,8 @@ function UIManager:OpenUI(uiEnum, data)
             end
             self.openedUIWithEnumDict[uiEnum][id] = uiObj;
 
+            self.readyOnLoadPanelDict[id] = uiObj;
+
             uiObj:Open(id, uiEnum, panelGameObject, data);
         end
     end
@@ -78,6 +82,9 @@ function UIManager:CloseUIOfEnum(uiEnum)
     if self.openedUIWithEnumDict[uiEnum] ~= nil then
         for k, v in pairs(self.openedUIWithEnumDict[uiEnum]) do
             self:CloseUI(v);
+            if self.readyOnLoadPanelDict[k] ~= nil then
+                self.readyOnLoadPanelDict[k] = nil;
+            end
         end
     end
 end
@@ -90,7 +97,14 @@ end
 
 function UIManager:Update()
     for k, v in pairs(self.openedUIWithIdDict) do
-        v:Update();
+        if self.readyOnLoadPanelDict[k] == nil then
+            v:Update();
+        end
+    end
+
+    for k, v in pairs(self.readyOnLoadPanelDict) do
+        v:Start();
+        self.readyOnLoadPanelDict[k] = nil;
     end
 end
 
