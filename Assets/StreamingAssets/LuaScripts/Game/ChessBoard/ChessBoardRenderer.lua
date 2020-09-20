@@ -47,3 +47,11 @@ end
 function ChessBoardRenderer:OnKillFaild(card)
 
 end
+
+function ChessBoardRenderer:WorldPos2YX(worldPos)
+    return -1, -1
+end
+
+function ChessBoardRenderer:GetPositionOfYX(y, x)
+    return CS.UnityEngine.Vector3.zero;
+end

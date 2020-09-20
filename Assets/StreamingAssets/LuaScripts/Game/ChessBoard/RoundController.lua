@@ -109,7 +109,7 @@ function RoundController:CreateNewCard(uid, cardType, colorType)
     return card;
 end
 
-function RoundController:OnClick()
+function RoundController:OnClick(worldPos)
     if not self.gameStarted then
         return;
     end
@@ -118,8 +118,7 @@ function RoundController:OnClick()
         return;
     end
 
-    local x = 0;
-    local y = 0;
+    local y, x = self.boardRenderer:WorldPos2YX(worldPos);
 
     if self.pickCard ~= nil then
         local opResult = self.board:OperateCard(self.pickCard, y, x);
